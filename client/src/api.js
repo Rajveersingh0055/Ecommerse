@@ -1,14 +1,15 @@
 import axios from "axios";
 
-// Construct the base URL safely, ensuring it always ends with /api
-let configuredBaseUrl =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-if (!configuredBaseUrl.endsWith("/api")) {
-  configuredBaseUrl += "/api";
-}
+const normalizeApiBaseUrl = (url) => {
+  const trimmedUrl = url.trim().replace(/\/+$/, "");
+  return trimmedUrl.endsWith("/api") ? trimmedUrl : `${trimmedUrl}/api`;
+};
+
+const configuredBaseUrl = normalizeApiBaseUrl(
+  import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+);
 
 export const api = axios.create({
-  // Automatically switch between localhost for dev and your deployed backend URL for production
   baseURL: configuredBaseUrl,
 });
 
