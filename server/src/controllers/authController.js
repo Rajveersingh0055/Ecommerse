@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../utils/sendEmail.js";
+import { getJwtSecret } from "../utils/jwt.js";
 
 const otpStore = new Map();
 
@@ -8,7 +9,7 @@ const generateOTP = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
 
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET || "fallback_secret", {
+  return jwt.sign({ id }, getJwtSecret(), {
     expiresIn: process.env.JWT_EXPIRE || "30d",
   });
 };

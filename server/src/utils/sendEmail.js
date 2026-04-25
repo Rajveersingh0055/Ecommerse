@@ -1,8 +1,10 @@
 import nodemailer from "nodemailer";
 
 export const sendEmail = async (options) => {
-  // Determine active keys or fallbacks.
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  const emailUser = process.env.EMAIL_USER || process.env.SMTP_USER;
+  const emailPass = process.env.EMAIL_PASS || process.env.SMTP_PASS;
+
+  if (!emailUser || !emailPass) {
     console.log(
       `[MOCK EMAIL SENT to ${options.email}]: \nSubject: ${options.subject} \nMessage: ${options.message}`,
     );
@@ -12,13 +14,13 @@ export const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: emailUser,
+      pass: emailPass,
     },
   });
 
   const mailOptions = {
-    from: `Assessment App <${process.env.EMAIL_USER}>`,
+    from: `Assessment App <${emailUser}>`,
     to: options.email,
     subject: options.subject,
     text: options.message,

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { api } from "../api.js";
+import { api, resolveAssetUrl } from "../api.js";
 
 export default function DashboardHomePage() {
   const navigate = useNavigate();
@@ -136,7 +136,7 @@ export default function DashboardHomePage() {
                     {/* Fix: use product.images[0] (new schema) */}
                     <img
                       src={
-                        product.images?.[0] ||
+                        resolveAssetUrl(product.images?.[0]) ||
                         "https://picsum.photos/600/400?random=99"
                       }
                       alt={product.name}

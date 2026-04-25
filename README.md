@@ -51,10 +51,8 @@ Create a \.env\ file in the \server/\ root:
 PORT=5000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_super_secret_jwt_key
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_email_app_password
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_email_app_password
 \\\
 Run the server:
 \\\ash
@@ -66,10 +64,18 @@ npm run dev
 cd client
 npm install
 \\\
+Create a \.env\ file in the \client/\ root:
+\\\env
+VITE_API_URL=http://localhost:5000
+\\\
 Run the Vite development server:
 \\\ash
 npm run dev
 \\\
+
+For deployment, set \VITE_API_URL\ on Vercel to your Render backend origin,
+for example \https://your-service.onrender.com\. The client adds \/api\
+automatically.
 
 ## 📡 API Reference (Summary)
 

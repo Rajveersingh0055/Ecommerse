@@ -1,9 +1,14 @@
+import { resolveAssetUrl } from "../api.js";
+
 // Fix: use new schema fields (name, images, mrp/sellingPrice) instead of old (title, imageUrl, price)
 export default function Card({ product }) {
   return (
     <article className="card">
       <img
-        src={product.images?.[0] || "https://picsum.photos/600/400?random=99"}
+        src={
+          resolveAssetUrl(product.images?.[0]) ||
+          "https://picsum.photos/600/400?random=99"
+        }
         alt={product.name}
         className="card-image"
       />

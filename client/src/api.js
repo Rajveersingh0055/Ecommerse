@@ -6,8 +6,17 @@ const normalizeApiBaseUrl = (url) => {
 };
 
 const configuredBaseUrl = normalizeApiBaseUrl(
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  import.meta.env.VITE_API_URL?.trim() || "http://localhost:5000/api",
 );
+
+export const apiBaseUrl = configuredBaseUrl;
+export const assetBaseUrl = configuredBaseUrl.replace(/\/api$/, "");
+
+export const resolveAssetUrl = (url) => {
+  if (!url) return "";
+  if (/^https?:\/\//i.test(url)) return url;
+  return `${assetBaseUrl}${url.startsWith("/") ? url : `/${url}`}`;
+};
 
 export const api = axios.create({
   baseURL: configuredBaseUrl,
